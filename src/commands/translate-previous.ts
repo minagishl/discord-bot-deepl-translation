@@ -4,15 +4,8 @@ import deepl from '~/utils/deepl';
 
 export default {
   data: new SlashCommandBuilder()
-    .setName('translate')
-    .setDescription('Translates the entered text')
-    .addStringOption((option) =>
-      option
-        .setName('text')
-        .setDescription('The text to be translated')
-        .setMaxLength(1500)
-        .setRequired(true),
-    )
+    .setName('translate-previous')
+    .setDescription('Translate one previous text')
     .addStringOption((option) =>
       option
         .setName('language')
@@ -37,13 +30,17 @@ export default {
 
   async execute(interaction: CommandInteraction) {
     try {
-      // Indicate that the bot is typing
-      await interaction.deferReply();
-
-      const text = String(interaction.options.get('text')?.value ?? '');
+      const text = await interaction.channel?.messages
+        .fetch({ limit: 1 })
+        .then((messages) => {
+          return messages.last()?.content;
+        });
       const language = String(
         interaction.options.get('language')?.value ?? 'JA',
       ).toUpperCase() as DeeplLanguages;
+
+      // Indicate that the bot is typing
+      await interaction.deferReply();
 
       const translation = await deepl(text ?? '', language);
       await interaction.editReply(translation);
