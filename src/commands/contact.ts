@@ -1,7 +1,7 @@
 import {
   SlashCommandBuilder,
   EmbedBuilder,
-  type CommandInteraction,
+  type ChatInputCommandInteraction,
 } from 'discord.js';
 import { COLOR } from '~/config';
 
@@ -10,7 +10,7 @@ export default {
     .setName('contact')
     .setDescription('Contact the developer of this bot.'),
 
-  async execute(interaction: CommandInteraction) {
+  async execute(interaction: ChatInputCommandInteraction) {
     try {
       const embed = new EmbedBuilder()
         .setColor(COLOR.PRIMARY)

@@ -1,4 +1,7 @@
-import { SlashCommandBuilder, type CommandInteraction } from 'discord.js';
+import {
+  SlashCommandBuilder,
+  type ChatInputCommandInteraction,
+} from 'discord.js';
 import { type DeeplLanguages } from 'deepl';
 import deepl from '~/utils/deepl';
 
@@ -28,7 +31,7 @@ export default {
         ),
     ),
 
-  async execute(interaction: CommandInteraction) {
+  async execute(interaction: ChatInputCommandInteraction) {
     try {
       const text = await interaction.channel?.messages
         .fetch({ limit: 1 })
