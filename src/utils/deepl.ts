@@ -1,5 +1,5 @@
 import { EmbedBuilder } from 'discord.js';
-import { COLOR } from '~/config';
+import { COLOR } from '../config';
 import translate, { type DeeplLanguages } from 'deepl';
 
 export default async function deepl(

@@ -7,6 +7,7 @@ const config = {
   outdir: './dist',
   platform: 'node',
   minify: true,
+  bundle: true,
 };
 
 build({

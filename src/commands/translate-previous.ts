@@ -3,7 +3,7 @@ import {
   type ChatInputCommandInteraction,
 } from 'discord.js';
 import { type DeeplLanguages } from 'deepl';
-import deepl from '~/utils/deepl';
+import deepl from '../utils/deepl';
 
 export default {
   data: new SlashCommandBuilder()

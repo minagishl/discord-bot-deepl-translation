@@ -3,7 +3,7 @@ import {
   EmbedBuilder,
   type ChatInputCommandInteraction,
 } from 'discord.js';
-import { COLOR } from '~/config';
+import { COLOR } from '../config';
 
 export default {
   data: new SlashCommandBuilder()

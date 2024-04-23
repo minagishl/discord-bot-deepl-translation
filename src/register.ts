@@ -1,7 +1,7 @@
 import { REST, Routes } from 'discord.js';
 import path from 'node:path';
 import dotenv from 'dotenv';
-import getFile from '~/utils/getFiles';
+import getFile from './utils/getFiles';
 
 dotenv.config();
 
