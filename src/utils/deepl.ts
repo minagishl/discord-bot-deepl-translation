@@ -5,6 +5,7 @@ import translate, { type DeeplLanguages } from 'deepl';
 export default async function deepl(
   text: string,
   language: DeeplLanguages,
+  original: boolean,
 ): Promise<string | { embeds: [EmbedBuilder] }> {
   // Set the DEEPL_API_KEY environment variables
   const DEEPL_API_KEY = process.env.DEEPL_API_KEY;
@@ -44,7 +45,15 @@ export default async function deepl(
   const embed = new EmbedBuilder()
     .setTitle('Translation')
     .setColor(COLOR.DEEPL_BLUE)
-    .setDescription('Text after translation:\n```\n' + translatedText + '\n```')
+    .setDescription(
+      original
+        ? 'Original text:\n```\n' +
+            text +
+            '\n```\nSentence after translation:\n```\n' +
+            translatedText +
+            '\n```'
+        : 'Sentence after translation:\n```\n' + translatedText + '\n```',
+    )
     .setFooter({
       text: 'This application works with the DeepL API.',
     });

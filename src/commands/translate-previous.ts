@@ -29,6 +29,12 @@ export default {
           { name: 'Russian', value: 'ru' },
           { name: 'Spanish', value: 'es' },
         ),
+    )
+    .addBooleanOption((option) =>
+      option
+        .setName('original')
+        .setDescription('You can specify whether to display the original text')
+        .setRequired(false),
     ),
 
   async execute(interaction: ChatInputCommandInteraction) {
@@ -41,11 +47,12 @@ export default {
       const language = String(
         interaction.options.get('language')?.value ?? 'JA',
       ).toUpperCase() as DeeplLanguages;
+      const original = interaction.options.getBoolean('original') ?? false;
 
       // Indicate that the bot is typing
       await interaction.deferReply();
 
-      const translation = await deepl(text ?? '', language);
+      const translation = await deepl(text ?? '', language, original);
       await interaction.editReply(translation);
     } catch (err: any) {
       console.error(err);
