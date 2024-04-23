@@ -16,7 +16,7 @@ export default {
         .setColor(COLOR.PRIMARY)
         .setTitle('Contact')
         .setDescription(
-          'This bot is a service using DeepL API.\nIt is not officially affiliated with the company.\n\nIf you have any questions, please contact the developer on Twitter\nhttps://twitter.com/minagishl\n\nAlso, please do not contact DeepL for problems with this service!',
+          'This bot is a service using DeepL API\nIt has nothing to do with the official\n\nPlease contact the developer on Twitter if you have any questions.\nhttps://twitter.com/minagishl\n\nAlso, please do not contact DeepL for problems with this service!',
         );
       await interaction.reply({ embeds: [embed] });
     } catch (err: any) {
