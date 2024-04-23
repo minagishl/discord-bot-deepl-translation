@@ -24,35 +24,30 @@ export default async function deepl(
   }
 
   // If the text is not empty and not too long, proceed with translation
-  await translate({
+  const result = await translate({
     free_api: true,
     text: String(text),
     target_lang: language,
     auth_key: DEEPL_API_KEY,
-  })
-    .then((result) => {
-      // Check if the translation is empty
-      if (result.data.translations[0].text === '') {
-        return 'An error occurred while translating the text.';
-      }
+  });
+  // Check if the translation is empty
+  if (result.data.translations[0].text === '') {
+    return 'An error occurred while translating the text.';
+  }
 
-      const translatedText = result.data.translations[0].text;
-      const embed = new EmbedBuilder()
-        .setTitle('Translation')
-        .setColor(COLOR.DEEPL_BLUE)
-        .setDescription(
-          'Text after translation:\n```\n' + translatedText + '\n```',
-        )
-        .setFooter({
-          text: 'This application works with the DeepL API.',
-        });
+  if (result.status !== 200) {
+    console.error('Status:', result.status);
+    return 'An error has occurred with the API, please contact your administrator';
+  }
 
-      return { embeds: [embed] };
-    })
-    .catch((err) => {
-      console.error(err);
-      return 'An error occurred while translating the text.';
+  const translatedText = result.data.translations[0].text;
+  const embed = new EmbedBuilder()
+    .setTitle('Translation')
+    .setColor(COLOR.DEEPL_BLUE)
+    .setDescription('Text after translation:\n```\n' + translatedText + '\n```')
+    .setFooter({
+      text: 'This application works with the DeepL API.',
     });
 
-  return 'An error occurred while translating the text.';
+  return { embeds: [embed] };
 }
