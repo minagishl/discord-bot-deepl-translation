@@ -1,9 +1,9 @@
 {
-  "name": "templarize",
+  "name": "deepl-translation-discord-bot",
   "version": "0.1.0",
-  "description": "A package to quickly build from template files",
+  "description": "A bot that adds Deepl translation functionality based on a template I created.",
   "license": "MIT",
-  "author": "templarize",
+  "author": "minagishl",
   "type": "commonjs",
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
