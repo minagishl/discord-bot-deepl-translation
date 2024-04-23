@@ -8,7 +8,7 @@ import translate, { type DeeplLanguages } from 'deepl';
 
 export default {
   data: new SlashCommandBuilder()
-    .setName('translation')
+    .setName('translate')
     .setDescription('Translates the entered text')
     .addStringOption((option) =>
       option
