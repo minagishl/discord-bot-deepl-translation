@@ -99,5 +99,5 @@ Promise.all([loadCommands(), loadEvents()])
   })
   .catch((err: any) => {
     // Log an error if the commands and events fail to load.
-    console.error(new Error(`Failed to load commands and events:\n${err}`));
+    console.error(`Failed to load commands and events:\n${err}`);
   });
