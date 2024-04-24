@@ -2,9 +2,26 @@ import {
   SlashCommandBuilder,
   type EmbedBuilder,
   type ChatInputCommandInteraction,
+  type APIApplicationCommandOptionChoice,
 } from 'discord.js';
 import { type DeeplLanguages } from 'deepl';
 import deepl from '../utils/deepl';
+
+const choices: Array<APIApplicationCommandOptionChoice<string>> = [
+  // Only certain languages because the quantity is too large.
+  { name: 'Chinese', value: 'zh' },
+  { name: 'Dutch', value: 'nl' },
+  { name: 'English', value: 'en' },
+  { name: 'French', value: 'fr' },
+  { name: 'German', value: 'de' },
+  { name: 'Italian', value: 'it' },
+  { name: 'Japanese', value: 'ja' },
+  { name: 'Korean', value: 'ko' },
+  { name: 'Polish', value: 'pl' },
+  { name: 'Portuguese', value: 'pt' },
+  { name: 'Russian', value: 'ru' },
+  { name: 'Spanish', value: 'es' },
+];
 
 async function translateText(interaction: ChatInputCommandInteraction): Promise<
   | string
@@ -62,21 +79,7 @@ export default {
             .setName('language')
             .setDescription('The language to translate to')
             .setRequired(false)
-            .addChoices(
-              // Only certain languages because the quantity is too large.
-              { name: 'Chinese', value: 'zh' },
-              { name: 'Dutch', value: 'nl' },
-              { name: 'English', value: 'en' },
-              { name: 'French', value: 'fr' },
-              { name: 'German', value: 'de' },
-              { name: 'Italian', value: 'it' },
-              { name: 'Japanese', value: 'ja' },
-              { name: 'Korean', value: 'ko' },
-              { name: 'Polish', value: 'pl' },
-              { name: 'Portuguese', value: 'pt' },
-              { name: 'Russian', value: 'ru' },
-              { name: 'Spanish', value: 'es' },
-            ),
+            .addChoices(...choices),
         )
         .addBooleanOption((option) =>
           option
@@ -96,21 +99,7 @@ export default {
             .setName('language')
             .setDescription('The language to translate to')
             .setRequired(false)
-            .addChoices(
-              // Only certain languages because the quantity is too large.
-              { name: 'Chinese', value: 'zh' },
-              { name: 'Dutch', value: 'nl' },
-              { name: 'English', value: 'en' },
-              { name: 'French', value: 'fr' },
-              { name: 'German', value: 'de' },
-              { name: 'Italian', value: 'it' },
-              { name: 'Japanese', value: 'ja' },
-              { name: 'Korean', value: 'ko' },
-              { name: 'Polish', value: 'pl' },
-              { name: 'Portuguese', value: 'pt' },
-              { name: 'Russian', value: 'ru' },
-              { name: 'Spanish', value: 'es' },
-            ),
+            .addChoices(...choices),
         )
         .addBooleanOption((option) =>
           option
