@@ -71,7 +71,6 @@ async function translatePrevious(
     .then((messages) => {
       return messages.last()?.content;
     });
-  console.log(text);
   const language = String(
     interaction.options.get('language')?.value ?? 'JA',
   ).toUpperCase() as DeeplLanguages;
