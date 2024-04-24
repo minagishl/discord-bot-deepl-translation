@@ -43,12 +43,9 @@ function addCommonOptions(
     );
 }
 
-async function translateText(interaction: ChatInputCommandInteraction): Promise<
-  | string
-  | {
-      embeds: [EmbedBuilder];
-    }
-> {
+async function translateText(
+  interaction: ChatInputCommandInteraction,
+): Promise<string | { embeds: [EmbedBuilder] }> {
   const text = String(interaction.options.get('text')?.value ?? '');
   const language = String(
     interaction.options.get('language')?.value ?? 'JA',
@@ -60,12 +57,7 @@ async function translateText(interaction: ChatInputCommandInteraction): Promise<
 
 async function translatePrevious(
   interaction: ChatInputCommandInteraction,
-): Promise<
-  | string
-  | {
-      embeds: [EmbedBuilder];
-    }
-> {
+): Promise<string | { embeds: [EmbedBuilder] }> {
   const text = await interaction.channel?.messages
     .fetch({ limit: 2 })
     .then((messages) => {
