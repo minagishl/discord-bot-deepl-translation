@@ -3,26 +3,10 @@ import {
   type EmbedBuilder,
   type ChatInputCommandInteraction,
   type SlashCommandSubcommandBuilder,
-  type APIApplicationCommandOptionChoice,
 } from 'discord.js';
 import { type DeeplLanguages } from 'deepl';
+import { choices } from '../constants';
 import deepl from '../utils/deepl';
-
-const choices: Array<APIApplicationCommandOptionChoice<string>> = [
-  // Only certain languages because the quantity is too large.
-  { name: 'Chinese', value: 'zh' },
-  { name: 'Dutch', value: 'nl' },
-  { name: 'English', value: 'en' },
-  { name: 'French', value: 'fr' },
-  { name: 'German', value: 'de' },
-  { name: 'Italian', value: 'it' },
-  { name: 'Japanese', value: 'ja' },
-  { name: 'Korean', value: 'ko' },
-  { name: 'Polish', value: 'pl' },
-  { name: 'Portuguese', value: 'pt' },
-  { name: 'Russian', value: 'ru' },
-  { name: 'Spanish', value: 'es' },
-];
 
 function addCommonOptions(
   subcommand: SlashCommandSubcommandBuilder,
@@ -118,11 +102,7 @@ export default {
       // Indicate that the bot is typing
       await interaction.deferReply({ ephemeral: isPrivate });
 
-      let translation:
-        | string
-        | {
-            embeds: [EmbedBuilder];
-          } = '';
+      let translation: string | { embeds: [EmbedBuilder] } = '';
 
       if (subcommand === 'text' || isPrivate) {
         translation = await translateText(interaction);

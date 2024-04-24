@@ -1,11 +1,42 @@
 import { Events, type Interaction } from 'discord.js';
+import { type DeeplLanguages } from 'deepl';
+import deepl from '~/utils/deepl';
 
 // Map to keep track of user rate limits
 const rateLimitMap = new Map();
 
+function extractTextInParentheses(text: string): string {
+  const regex = /\(([^)]+)\)/;
+  const match = text.match(regex);
+  return match !== null ? match[1] : '';
+}
+
 export default {
   name: Events.InteractionCreate,
   async execute(interaction: Interaction): Promise<void> {
+    // When the message menu command is executed
+    if (interaction.isMessageContextMenuCommand()) {
+      console.log(
+        `The ${interaction.commandName} command has been executed <${interaction.user.id}>`,
+      );
+
+      // Change while you're thinking about it
+      await interaction.deferReply();
+
+      const commandName = interaction.commandName;
+      const languageCode = extractTextInParentheses(commandName);
+      const text = String(interaction.targetMessage);
+      let userLocale: DeeplLanguages = 'JA';
+      if (languageCode === 'AUTO') {
+        userLocale = interaction.locale as unknown as DeeplLanguages;
+        await interaction.editReply(await deepl(text, userLocale, false));
+      } else {
+        await interaction.editReply(
+          await deepl(text, languageCode as DeeplLanguages, false),
+        );
+      }
+    }
+
     // Check if the interaction is a chat input command
     if (!interaction.isChatInputCommand()) return;
 

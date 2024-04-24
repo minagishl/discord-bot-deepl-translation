@@ -2,6 +2,7 @@ import { REST, Routes } from 'discord.js';
 import path from 'node:path';
 import dotenv from 'dotenv';
 import getFile from './utils/getFiles';
+import { userCommands } from './constants';
 
 dotenv.config();
 
@@ -24,6 +25,9 @@ const deployCommands = async (): Promise<void> => {
     }
 
     const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
+
+    // Add User command (created manually since it does not exist in discord.js)
+    commands.push(...userCommands);
 
     console.log(
       `Started refreshing ${commands.length} application (/) commands.`,
