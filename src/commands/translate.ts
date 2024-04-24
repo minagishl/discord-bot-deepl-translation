@@ -2,6 +2,7 @@ import {
   SlashCommandBuilder,
   type EmbedBuilder,
   type ChatInputCommandInteraction,
+  type SlashCommandSubcommandBuilder,
   type APIApplicationCommandOptionChoice,
 } from 'discord.js';
 import { type DeeplLanguages } from 'deepl';
@@ -22,6 +23,25 @@ const choices: Array<APIApplicationCommandOptionChoice<string>> = [
   { name: 'Russian', value: 'ru' },
   { name: 'Spanish', value: 'es' },
 ];
+
+function addCommonOptions(
+  subcommand: SlashCommandSubcommandBuilder,
+): SlashCommandSubcommandBuilder {
+  return subcommand
+    .addStringOption((option) =>
+      option
+        .setName('language')
+        .setDescription('The language to translate to')
+        .setRequired(false)
+        .addChoices(...choices),
+    )
+    .addBooleanOption((option) =>
+      option
+        .setName('original')
+        .setDescription('You can specify whether to display the original text')
+        .setRequired(false),
+    );
+}
 
 async function translateText(interaction: ChatInputCommandInteraction): Promise<
   | string
@@ -64,78 +84,39 @@ export default {
     .setName('translate')
     .setDescription('Translates the entered text or the previous text')
     .addSubcommand((subcommand) =>
-      subcommand
-        .setName('text')
-        .setDescription('Translate entered text')
-        .addStringOption((option) =>
-          option
-            .setName('text')
-            .setDescription('The text to be translated')
-            .setMaxLength(1500)
-            .setRequired(true),
-        )
-        .addStringOption((option) =>
-          option
-            .setName('language')
-            .setDescription('The language to translate to')
-            .setRequired(false)
-            .addChoices(...choices),
-        )
-        .addBooleanOption((option) =>
-          option
-            .setName('original')
-            .setDescription(
-              'You can specify whether to display the original text',
-            )
-            .setRequired(false),
-        ),
+      addCommonOptions(
+        subcommand
+          .setName('text')
+          .setDescription('Translate entered text')
+          .addStringOption((option) =>
+            option
+              .setName('text')
+              .setDescription('The text to be translated')
+              .setMaxLength(1500)
+              .setRequired(true),
+          ),
+      ),
     )
     .addSubcommand((subcommand) =>
-      subcommand
-        .setName('previous')
-        .setDescription('Translate previous text')
-        .addStringOption((option) =>
-          option
-            .setName('language')
-            .setDescription('The language to translate to')
-            .setRequired(false)
-            .addChoices(...choices),
-        )
-        .addBooleanOption((option) =>
-          option
-            .setName('original')
-            .setDescription(
-              'You can specify whether to display the original text',
-            )
-            .setRequired(false),
-        ),
+      addCommonOptions(
+        subcommand
+          .setName('previous')
+          .setDescription('Translate previous text'),
+      ),
     )
     .addSubcommand((subcommand) =>
-      subcommand
-        .setName('private')
-        .setDescription('A private command that only the executor can see')
-        .addStringOption((option) =>
-          option
-            .setName('text')
-            .setDescription('The text to be translated')
-            .setMaxLength(1500)
-            .setRequired(true),
-        )
-        .addStringOption((option) =>
-          option
-            .setName('language')
-            .setDescription('The language to translate to')
-            .setRequired(false)
-            .addChoices(...choices),
-        )
-        .addBooleanOption((option) =>
-          option
-            .setName('original')
-            .setDescription(
-              'You can specify whether to display the original text',
-            )
-            .setRequired(false),
-        ),
+      addCommonOptions(
+        subcommand
+          .setName('private')
+          .setDescription('A private command that only the executor can see')
+          .addStringOption((option) =>
+            option
+              .setName('text')
+              .setDescription('The text to be translated')
+              .setMaxLength(1500)
+              .setRequired(true),
+          ),
+      ),
     ),
 
   async execute(interaction: ChatInputCommandInteraction) {
