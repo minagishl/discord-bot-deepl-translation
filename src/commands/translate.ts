@@ -109,21 +109,49 @@ export default {
             )
             .setRequired(false),
         ),
+    )
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName('private')
+        .setDescription('A private command that only the executor can see')
+        .addStringOption((option) =>
+          option
+            .setName('text')
+            .setDescription('The text to be translated')
+            .setMaxLength(1500)
+            .setRequired(true),
+        )
+        .addStringOption((option) =>
+          option
+            .setName('language')
+            .setDescription('The language to translate to')
+            .setRequired(false)
+            .addChoices(...choices),
+        )
+        .addBooleanOption((option) =>
+          option
+            .setName('original')
+            .setDescription(
+              'You can specify whether to display the original text',
+            )
+            .setRequired(false),
+        ),
     ),
 
   async execute(interaction: ChatInputCommandInteraction) {
     try {
-      // Indicate that the bot is typing
-      await interaction.deferReply();
-
       const subcommand = interaction.options.getSubcommand();
+      const isPrivate: boolean = subcommand === 'private';
+      // Indicate that the bot is typing
+      await interaction.deferReply({ ephemeral: isPrivate });
+
       let translation:
         | string
         | {
             embeds: [EmbedBuilder];
           } = '';
 
-      if (subcommand === 'text') {
+      if (subcommand === 'text' || isPrivate) {
         translation = await translateText(interaction);
       } else if (subcommand === 'previous') {
         translation = await translatePrevious(interaction);
