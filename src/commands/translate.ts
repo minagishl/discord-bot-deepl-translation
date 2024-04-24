@@ -67,10 +67,11 @@ async function translatePrevious(
     }
 > {
   const text = await interaction.channel?.messages
-    .fetch({ limit: 1 })
+    .fetch({ limit: 2 })
     .then((messages) => {
       return messages.last()?.content;
     });
+  console.log(text);
   const language = String(
     interaction.options.get('language')?.value ?? 'JA',
   ).toUpperCase() as DeeplLanguages;
