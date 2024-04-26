@@ -60,6 +60,8 @@
     "vitest": "^1.5.0"
   },
   "engines": {
-    "npm": "Please use yarn instead of npm"
+    "node": "20.x",
+    "npm": "10.x",
+    "yarn": "1.x"
   }
 }
