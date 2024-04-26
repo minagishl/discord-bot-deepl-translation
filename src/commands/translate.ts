@@ -33,7 +33,7 @@ async function translateText(
   const text = String(interaction.options.get('text')?.value ?? '');
   const language = String(
     interaction.options.get('language')?.value ?? 'JA',
-  ).toUpperCase() as DeeplLanguages;
+  ) as DeeplLanguages;
   const original = interaction.options.getBoolean('original') ?? false;
 
   return await deepl(text ?? '', language, original);
@@ -49,7 +49,7 @@ async function translatePrevious(
     });
   const language = String(
     interaction.options.get('language')?.value ?? 'JA',
-  ).toUpperCase() as DeeplLanguages;
+  ) as DeeplLanguages;
   const original = interaction.options.getBoolean('original') ?? false;
 
   return await deepl(text ?? '', language, original);
