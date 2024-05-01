@@ -20,4 +20,5 @@ export const userCommands: Array<{ name: string; type: number }> = [
   { name: 'Translate (AUTO)', type: 3 },
   { name: 'Translate (EN)', type: 3 },
   { name: 'Translate (JA)', type: 3 },
+  { name: 'Translate (ZH)', type: 3 },
 ];
